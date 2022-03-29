@@ -1,0 +1,30 @@
+﻿@page
+@using Acme.BookStore.Localization
+@using Microsoft.Extensions.Localization
+@using Acme.BookStore.Web.Pages.Authors
+@model IndexModel
+@inject IStringLocalizer<BookStoreResource> L
+@section scripts{
+    <abp-script src="/Pages/Authors/Index.js"></abp-script>
+    <link rel="stylesheet" href="~/CSS/Style.css" />
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">@L["Authors"]</abp-column>
+            <abp-column size-md="_6" class="text-right" style="text-align:right">
+                <abp-button id="NewAuthor"
+                            text="@L["NewAuthor"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-column size-md ="_4" style="float:right" >
+            <input name="Search" placeholder="Search" class="form-control"  /> @* add search input *@
+        </abp-column>
+        <abp-table striped-rows="true" id="AuthorsTable"></abp-table>
+    </abp-card-body>
+</abp-card>

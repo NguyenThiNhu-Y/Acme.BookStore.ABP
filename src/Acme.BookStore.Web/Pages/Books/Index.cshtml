@@ -1,0 +1,29 @@
+﻿@page
+@using Acme.BookStore.Permissions
+@using Acme.BookStore.Localization
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Authorization
+@using Acme.BookStore.Web.Pages.Books
+@inject IStringLocalizer<BookStoreResource> L
+@inject IAuthorizationService AuthorizationService
+@model IndexModel
+@section scripts{
+    <abp-script src="/Pages/Books/Index.js"></abp-script>
+}
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">@L["Books"]</abp-column>
+            <abp-column size-md="_6" class="text-right">
+                @if (await AuthorizationService.IsGrantedAsync(BookStorePermissions.Books.Create))
+                {
+                    <abp-button id="NewBookButton" text="@L["New Books"].Value" icon="plus" button-type="Primary" />
+
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="BooksTable"></abp-table>
+    </abp-card-body>
+</abp-card>
