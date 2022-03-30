@@ -15,6 +15,7 @@ namespace Acme.BookStore.Authors
         [DataType(DataType.Date)]
         public DateTime DoB { get; set; }
 
+        [StringLength(255)]
         public string ShortBio { get; set; }
     }
 }

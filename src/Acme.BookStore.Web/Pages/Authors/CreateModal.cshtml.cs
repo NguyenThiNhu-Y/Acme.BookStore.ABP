@@ -24,7 +24,10 @@ namespace Acme.BookStore.Web.Pages.Authors
 
         public async Task<IActionResult> OnPost()
         {
-            await _authorAppService.CreateAsync(Author);
+            if(Author.DoB < DateTime.Today)
+            {
+                await _authorAppService.CreateAsync(Author);
+            }
             return NoContent();
         }
     }

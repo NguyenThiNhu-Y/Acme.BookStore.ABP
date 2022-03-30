@@ -20,7 +20,7 @@ namespace Acme.BookStore.Authors
 
         Task<AuthorDto> UpdateAsync(Guid ID, CreateUpdateAuthorDto input);
 
-        Task DeleteAsync(Guid Id);
+        Task<bool> DeleteAsync(Guid Id);
 
         Task ChangeStatus(Guid Id);
 

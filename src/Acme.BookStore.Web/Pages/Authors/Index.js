@@ -18,7 +18,7 @@ $(function () {
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,
-            order: [[1, "asc"]],
+            order: true,
             searching: false,
             scrollX: true,
             
@@ -26,7 +26,9 @@ $(function () {
             columnDefs: [
                 {
                     title: l('Name'),
-                    data: "name"
+                    data: "name",
+                    width: "200px",
+                    className: "text-center",
                 },
                 {
                     title: l('DoB'),
@@ -37,11 +39,14 @@ $(function () {
                             .fromISO(data, {
                                 locale: abp.localization.currentCulture.name
                             }).toLocaleString();
-                    }
+                    },
+                    width: "150px",
+                    className: "text-center",
                 },
                 {
                     title: l('ShortBio'),
-                    data: 'shortBio'
+                    data: 'shortBio',
+                    className: "text-center"
                     
 
                 },
@@ -58,10 +63,13 @@ $(function () {
                             '<span class="slider round"></span>' +
                             '</label >';
                         return str;
-                    }
+                    },
+                    width: "150px",
+                    className: "text-center",
                 },
                 {
                     title: l('Actions'),
+                    className: "text-center",
                     rowAction: {
                         items:
                             [
@@ -74,14 +82,22 @@ $(function () {
                                 {
                                     text: l('Delete'),
                                     confirmMessage: function (data) {
-                                        return l('AuthorDeletionConfirmationMessage', data.record.name);
+                                        return l('Delete', data.record.name);
                                     },
                                     action: function (data) {
+                                        
                                         acme.bookStore.authors.author
                                             .delete(data.record.id)
-                                            .then(function () {
-                                                abp.notify.info(l('SuccessfullyDeleted'));
-                                                dataTable.ajax.reload();
+                                            .then(function (data) {
+                                                if (data) {
+                                                    abp.notify.info(l('SuccessfullyDeleted'));
+                                                    dataTable.ajax.reload();
+                                                }
+                                                else {
+                                                    //abp.notify.info(l('UnsuccessfullyDeleted'));
+                                                    abp.message.error(l("NotifyDeleteAuthor"));
+                                                }
+                                                
                                             });
                                     }
                                 },
@@ -114,7 +130,7 @@ $(function () {
         createModal.open();
     });
 
-    $("input[name='Search'").change(function () {
+    $("input[name='Search'").keyup(function () {
         dataTable.ajax.reload();
         console.log(getFilter);
     });
@@ -122,25 +138,25 @@ $(function () {
     
 });
 function ChangeStatus(id, status) {
-    var mess = 'Are you sure to block the author?';
+    var mess = l('BlockTheAuthor');
     if (status == 0) {
-        mess = 'Are you sure to unblock the author?';
+        mess = l('UnblockTheAuthor');
     }
-    abp.message.confirm(mess)
+    if ($('#' + id).is(':checked')) {
+        $("#" + id).prop("checked", false);
+    }
+    else {
+        $("#" + id).prop("checked", true);
+    }
+    abp.message.confirm(mess,l('Notify'))
         .then(function (confirmed) {
+            
             if (confirmed) {
                 acme.bookStore.authors.author.changeStatus(id)
-                abp.message.success('Your changes have been successfully saved!', 'Congratulations');
+                abp.message.success(l('YourChangesHaveBeenSuccessfullySaved'), l('Congratulations'));
                 dataTable.ajax.reload();
             }
-            else {
-                if ($('#' + id).is(':checked')) {
-                    $("#" + id).prop("checked", false);
-                }
-                else {
-                    $("#" + id).prop("checked", true);
-                }
-            }
+            
             
         });
 };
@@ -232,14 +248,36 @@ function ListBookOfAuthor(id) {
     );
 }
 
-function Search() {
-    var strSearch = document.getElementById("searchString").value
-    console.log(strSearch);
-};
 
-//function FormatCurrency(money) {
-//    return money.toLocaleString('vi-VN', {
-//        style: 'currency',
-//        currency: 'VND'
-//    }
-//};
+function change(el) {
+    var max_len = 255;
+    if (el.value.length > max_len) {
+        el.value = el.value.substr(0, max_len);
+    }
+    document.getElementById('char_cnt').innerHTML = el.value.length;
+    document.getElementById('chars_left').innerHTML = max_len - el.value.length;
+    return true;
+}
+
+function checkDate() {
+    debugger;
+    var ngay = $("input[name='Author.DoB']").val();
+    var today = new Date(); 
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var homnay = new Date(date);
+    var dateInput = new Date(ngay);
+    if (dateInput >= homnay) {
+        document.getElementById('errorDate').innerHTML = l('Input date must be less than today');
+        document.getElementById("save").disabled = true;
+    }
+    else {
+        if (homnay.getFullYear() - dateInput.getFullYear() > 130 || homnay.getFullYear() - dateInput.getFullYear() < 10 ) {
+            document.getElementById('errorDate').innerHTML = l('Age must be more than 10 and less than 130');
+            document.getElementById("save").disabled = true;
+        }
+        else {
+            document.getElementById('errorDate').innerHTML = '';
+            document.getElementById("save").disabled = false;
+        }
+    }
+}

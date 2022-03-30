@@ -13,15 +13,15 @@
 <abp-modal size="ExtraLarge">
     <abp-modal-header>
         <abp-row>
-            <abp-column size-md="_6">@L["BooksOfAuthor"]</abp-column>
+            <abp-column >@L["BooksOfAuthor"]</abp-column>
         </abp-row>
     </abp-modal-header>
     <abp-modal-body>
         <abp-table striped-rows="true" id="BookOfAuthorsTable">
             <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Price</th>
+                <th>@L["Name"]</th>
+                <th>@L["Type"]</th>
+                <th>@L["Price"]</th>
             </tr>
             @if (Model.Books.Count > 0)
             {
@@ -40,7 +40,7 @@
             {
                 <tr class="odd">
                     <td valign="top" colspan="3" class="dataTables_empty text-center">
-                        No data available
+                        @L["NoDataAvailable"]
                     </td>
                 </tr>
             }

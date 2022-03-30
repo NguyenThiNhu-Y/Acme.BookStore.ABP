@@ -1,8 +1,9 @@
-{
+﻿{
   "Culture": "en",
   "Texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
+    "Congratulations": "Congratulations",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
     "Menu:BookStore": "Book Store",
     "Menu:Books": "Books",
@@ -14,6 +15,7 @@
     "Book": "Books",
     "PublishDate": "Publish date",
     "NewBook": "New book",
+    "NewAuthor": "New Author",
     "Name": "Name",
     "Type": "Type",
     "Price": "Price",
@@ -37,6 +39,28 @@
     "Permission:Books.Create": "Create new books",
     "Permission:Books.Edit": "Editing the books",
     "Permission:Books.Delete": "Deleting the books",
-    "BookStore:00001": "There is already an author with the same name: {name}"
+    "BookStore:00001": "There is already an author with the same name: {name}",
+    "BlockTheAuthor": "Block The Author?",
+    "UnblockTheAuthor": "Unblock The Author?",
+    "YourChangesHaveBeenSuccessfullySaved": "Your Changes Have Been Successfully Saved",
+    "BooksOfAuthor": "Books Of Author",
+    "NoDataAvailable": "No Data Available",
+    "Search": "Search",
+    "You've typed": "You've typed",
+    "character(s)": "character(s)",
+    "Age must be more than 10 and less than 130": "Age must be more than 10 and less than 130",
+    "Input date must be less than today": "Input date must be less than today",
+    "AuthorDeletionConfirmationMessage": "Author Deletion Confirmation Message",
+    "UnsuccessfullyDeleted": "Unsuccessfully Deleted",
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "UpdateAuthor": "Update Author",
+    "DoB": "Date of Birth",
+    "ShortBio": "Short Bio",
+    "is successfully running": "is successfully running",
+    "Welcome to the Application": "Welcome to the Application",
+    "Let's improve your application": "Let's improve your application",
+    "Here are some links to help you get started:": "Here are some links to help you get started:",
+    "NotifyDeleteAuthor": "You cannot delete. Because the list of books is not empty"
   }
 }

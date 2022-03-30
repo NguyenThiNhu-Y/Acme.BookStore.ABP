@@ -61,7 +61,7 @@ namespace Acme.BookStore.Authors
             //{
             //    throw new AuthorAlreadyExistsException(input.Name);
             //}
-
+            
             var author = ObjectMapper.Map<CreateUpdateAuthorDto, Author>(input);
             author.Status = Status.visible;
             await _authorRepository.InsertAsync(author);
@@ -70,7 +70,7 @@ namespace Acme.BookStore.Authors
             
         }
 
-        public async Task DeleteAsync(Guid Id)
+        public async Task<bool> DeleteAsync(Guid Id)
         {
             var author = await _authorRepository.FindAsync(Id);
             var listBook = await _bookRepository.GetListAsync();
@@ -84,7 +84,9 @@ namespace Acme.BookStore.Authors
             if(count == 0)
             {
                 await _authorRepository.DeleteAsync(author);
+                return true;
             }
+            return false;
             
         }
 

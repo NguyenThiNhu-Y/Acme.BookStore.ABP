@@ -14,11 +14,22 @@
     <abp-modal>
         <abp-modal-header title="@L["UpdateAuthor"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-input  asp-for="Id"/>
+            <abp-input asp-for="Id" />
             <abp-input asp-for="Author.Name" />
-            <abp-input asp-for="Author.DoB" />
-            <abp-input asp-for="Author.ShortBio" />
+            <abp-input asp-for="Author.DoB" onchange='checkDate()' />
+            <span class="text-danger field-validation-error" data-valmsg-replace="true">
+                <span id="errorDate"></span>
+            </span>
+            <abp-input asp-for="Author.ShortBio" onkeyup="change(this);" />
+            <p data-valmsg-replace="true" class="field-validation-error">
+                @L["You've typed"] <span id="char_cnt">0</span> @L["character(s)"].
+                @L["You are allowed"] <span id="chars_left">255</span> @L["character(s)"].
+            </p>
         </abp-modal-body>
-        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+        @*<abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>*@
+        <abp-modal-footer>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@L["Cancel"]</button>
+            <button id="save" data-busy-text="Đang lưu..." class="btn btn-primary bkgrnd-cyan save-details" type="submit" name="save-details">@L["Save"]</button>
+        </abp-modal-footer>
     </abp-modal>
 </form>
