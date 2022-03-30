@@ -1,7 +1,8 @@
 ﻿var categroryAppService;
 var dataTable;
+var l;
 $(function () {
-    var l = abp.localization.getResource('BookStore');
+    l = abp.localization.getResource('BookStore');
     var createModal = new abp.ModalManager(abp.appPath + 'Categories/CreateModal');
     var editModal = new abp.ModalManager(abp.appPath + 'Categories/EditModal');
     var deleteModal = new abp.ModalManager(abp.appPath + 'Categories/EditModal');
@@ -62,7 +63,7 @@ $(function () {
                         if (data.status == 1)
                             check = "checked";
                         var str = '<label class="switch">' +
-                            `<input type = "checkbox" id="${data.id}" ${check} onclick="ChangeStatus(this.id)">` +
+                            `<input type = "checkbox" id="${data.id}" ${check} onclick="ChangeStatus(this.id,${data.status})">` +
                                 '<span class="slider round"></span>' +
                             '</label >';
                         return str;
@@ -78,6 +79,7 @@ $(function () {
                                     text: l('Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
+                                        dataTable.ajax.reload();
                                     }
                                 },
                                 {
@@ -88,9 +90,15 @@ $(function () {
                                     action: function (data) {
                                         acme.bookStore.categories.category
                                             .delete(data.record.id)
-                                            .then(function () {
-                                                abp.notify.info(l('SuccessfullyDeleted'));
-                                                dataTable.ajax.reload();
+                                            .then(function (data) {
+                                                if (data) {
+                                                    abp.notify.info(l('SuccessfullyDeleted'));
+                                                    dataTable.ajax.reload();
+                                                }
+                                                
+                                                else{
+                                                    abp.message.error(l("NotifyDeleteAuthor"));
+                                                }
                                             });
                                     }
                                 }
@@ -118,9 +126,30 @@ $(function () {
     
 });
 
-function ChangeStatus(id) {
-    debugger;
-    categroryAppService.changStatus(id);
+function ChangeStatus(id, status) {
+    if ($('#' + id).is(':checked')) {
+        $("#" + id).prop("checked", false);
+    }
+    else {
+        $("#" + id).prop("checked", true);
+    }
     dataTable.ajax.reload();
+
+    var mess = l('BlockTheCategory');
+    if (status == 0) {
+        mess = l('UnblockTheCategory');
+    }
+
+    abp.message.confirm(mess, l('Notify'))
+        .then(function (confirmed) {
+
+            if (confirmed) {
+                acme.bookStore.authors.author.changeStatus(id)
+                abp.message.success(l('YourChangesHaveBeenSuccessfullySaved'), l('Congratulations'));
+                dataTable.ajax.reload();
+            }
+
+
+        });
 };
 

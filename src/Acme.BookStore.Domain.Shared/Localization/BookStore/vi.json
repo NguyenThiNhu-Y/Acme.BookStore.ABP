@@ -47,8 +47,18 @@
     "Welcome to the Application": "Chào mừng bạn đến với ứng dụng",
     "Let's improve your application": "Hãy cải thiện ứng dụng của bạn",
     "Here are some links to help you get started:": "Dưới đây là một số liên kết để giúp bạn bắt đầu:",
-    "NotifyDeleteAuthor": "Bạn không thể xóa. Vì danh sách sách không trống"
-
+    "NotifyDeleteAuthor": "Bạn không thể xóa. Vì danh sách sách không trống",
+    "Author": "Tác giả",
+    "CategoryParent": "Danh mục cha",
+    "IdAuthor": "Tác giả",
+    "UpdateBook": "Chỉnh sửa sách",
+    "Image": "Hình ảnh",
+    "Describe": "Mô tả",
+    "NewCategory": "Thêm mới loại sách",
+    "Categories": "Danh sách loại sách",
+    "BlockTheCategory": "Khóa danh mục",
+    "UnblockTheCategory": "Mở khóa danh mục",
+    "NotifyDeleteCategory": "Bạn không thể xóa. Vì danh sách sách không trống"
 
   }
 }

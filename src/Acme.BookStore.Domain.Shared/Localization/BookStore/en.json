@@ -61,6 +61,17 @@
     "Welcome to the Application": "Welcome to the Application",
     "Let's improve your application": "Let's improve your application",
     "Here are some links to help you get started:": "Here are some links to help you get started:",
-    "NotifyDeleteAuthor": "You cannot delete. Because the list of books is not empty"
+    "NotifyDeleteAuthor": "You cannot delete. Because the list of books is not empty",
+    "Author": "Author",
+    "CategoryParent": "Category Parent",
+    "IdAuthor": "Author",
+    "UpdateBook": "Update Book",
+    "Image": "Image",
+    "Describe": "Describe",
+    "NewCategory": "New Category",
+    "Categories": "Categories",
+    "BlockTheCategory": "Block The Category",
+    "UnblockTheCategory": "Unblock The Category",
+    "NotifyDeleteCategory": "You cannot delete. Because the list of books is not empty"
   }
 }

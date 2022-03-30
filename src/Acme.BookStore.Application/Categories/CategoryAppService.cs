@@ -1,4 +1,5 @@
-﻿using Acme.BookStore.Shared;
+﻿using Acme.BookStore.Books;
+using Acme.BookStore.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,12 @@ namespace Acme.BookStore.Categories
     public class CategoryAppService : ApplicationService, ICategoryAppService
     {
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryAppService(ICategoryRepository categoryRepository)
+        private readonly IBookRepository _bookRepository;
+
+        public CategoryAppService(ICategoryRepository categoryRepository, IBookRepository  bookRepository)
         {
             _categoryRepository = categoryRepository;
+            _bookRepository = bookRepository;
         }
 
         public async Task<int> UpdateCountBook(Guid id, bool add)
@@ -42,10 +46,24 @@ namespace Acme.BookStore.Categories
             return ObjectMapper.Map<Category, CategoryDto>(categrory);
         }
 
-        public async Task DeleteAsync(Guid Id)
+        public async Task<bool> DeleteAsync(Guid Id)
         {
             var category = await _categoryRepository.FindAsync(Id);
-            await _categoryRepository.DeleteAsync(category);
+
+            var listBook = await _bookRepository.GetListAsync();
+            int count = 0;
+            foreach (var item in listBook)
+            {
+                if (item.Type == Id)
+                    count++;
+
+            }
+            if (count == 0)
+            {
+                await _categoryRepository.DeleteAsync(category);
+                return true;
+            }
+            return false;
         }
 
         public async Task<CategoryDto> GetAsync(Guid id)
@@ -60,6 +78,8 @@ namespace Acme.BookStore.Categories
         {
             var count = await _categoryRepository.GetCountAsync(input.FilterText, input.Name);
             var items = await _categoryRepository.GetListAsync(input.FilterText, input.Name, input.Sorting, input.MaxResultCount,input.SkipCount);
+            var listBook = await _bookRepository.GetListAsync();
+
             List<CategoryDto> result = new List<CategoryDto>();
             foreach (var i in items)
             {
@@ -73,6 +93,13 @@ namespace Acme.BookStore.Categories
                         ctgParent = category.Name;
                     }
                 }
+                int countBooks = 0;
+                foreach (var item in listBook)
+                {
+                    if (item.Type == i.Id)
+                        countBooks++;
+
+                }
                 
                 result.Add(new CategoryDto()
                 {
@@ -81,7 +108,7 @@ namespace Acme.BookStore.Categories
                     CategoryParent = ctgParent,
                     Image = i.Image,
                     Describe = i.Describe,
-                    CountBook = i.CountBook,
+                    CountBook = countBooks,
                     Status = i.Status,
                     IdParen = i.IdParen
                 });

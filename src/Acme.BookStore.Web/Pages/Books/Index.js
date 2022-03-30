@@ -41,7 +41,6 @@
                     title: l('Price'),
                     data: "price",
                     render: function (data) {
-                        //return data.toFixed(3).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + " VND";
                         return data.toLocaleString('vi-VN', {
                             style: 'currency',
                             currency: 'VND'
@@ -77,7 +76,7 @@
                                     text: l('Delete'),
                                     visible: abp.auth.isGranted('BookStore.Books.Delete'),
                                     confirmMessage: function (data) {
-                                        return l('BookDeletionConfirmationMessage', data.record.name);
+                                        return l('Delete', data.record.name);
                                     },
                                     action: function (data) {
                                         acme.bookStore.books.book

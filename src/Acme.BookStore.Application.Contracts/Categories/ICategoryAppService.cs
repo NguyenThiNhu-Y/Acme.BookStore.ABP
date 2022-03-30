@@ -17,7 +17,7 @@ namespace Acme.BookStore.Categories
 
         Task<CategoryDto> GetAsync(Guid id);
 
-        Task DeleteAsync(Guid Id);
+        Task<bool> DeleteAsync(Guid Id);
 
         //Task<PagedResultDto<LookupDto<Guid?>>> GetListCategoryLookupAsync(LookupRequestDto input);
 

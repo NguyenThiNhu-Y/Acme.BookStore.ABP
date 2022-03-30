@@ -138,16 +138,19 @@ $(function () {
     
 });
 function ChangeStatus(id, status) {
-    var mess = l('BlockTheAuthor');
-    if (status == 0) {
-        mess = l('UnblockTheAuthor');
-    }
     if ($('#' + id).is(':checked')) {
         $("#" + id).prop("checked", false);
     }
     else {
         $("#" + id).prop("checked", true);
     }
+    dataTable.ajax.reload();
+
+    var mess = l('BlockTheAuthor');
+    if (status == 0) {
+        mess = l('UnblockTheAuthor');
+    }
+    
     abp.message.confirm(mess,l('Notify'))
         .then(function (confirmed) {
             

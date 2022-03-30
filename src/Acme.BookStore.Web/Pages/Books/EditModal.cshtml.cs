@@ -45,20 +45,16 @@ namespace Acme.BookStore.Web.Pages.Books
             Book = ObjectMapper.Map<BookDto, CreateUpdateBookDto>(bookDto);
 
 
-            CategoryIdFilterItems = new List<SelectListItem>
-            {
-                new SelectListItem("Choose","")
-            };
+            CategoryIdFilterItems = new List<SelectListItem>();
+            
             var getlistCate = await _categoryAppService.GetListCategoryLookupAsync();
             foreach (var item in getlistCate)
             {
                 CategoryIdFilterItems.AddLast(new SelectListItem(item.DisplayName, item.Id.ToString()));
             }
 
-            AuthorIdFilterItems = new List<SelectListItem>
-            {
-                new SelectListItem("Chose","")
-            };
+            AuthorIdFilterItems = new List<SelectListItem>();
+           
 
             GetAuthorInput inputAuthor = new GetAuthorInput
             {

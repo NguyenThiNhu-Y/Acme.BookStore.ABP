@@ -38,20 +38,16 @@ namespace Acme.BookStore.Web.Pages.Books
         public async void OnGet()
         {
             Book = new CreateUpdateBookDto();
-            CategoryIdFilterItems = new List<SelectListItem>
-            {
-                new SelectListItem("Choose","")
-            };
+            CategoryIdFilterItems = new List<SelectListItem>();
+            
             var getlist = await _categoryAppService.GetListCategoryLookupAsync();
             foreach (var item in getlist)
             {
                 CategoryIdFilterItems.AddLast(new SelectListItem(item.DisplayName, item.Id.ToString()));
             }
 
-            AuthorIdFilterItems = new List<SelectListItem>
-            {
-                new SelectListItem("Chose","")
-            };
+            AuthorIdFilterItems = new List<SelectListItem>();
+            
 
             GetAuthorInput inputAuthor = new GetAuthorInput
             {
