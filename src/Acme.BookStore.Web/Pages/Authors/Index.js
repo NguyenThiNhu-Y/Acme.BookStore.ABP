@@ -1,12 +1,22 @@
 ﻿var dataTable;
 var l;
 var getFilter;
+var i = 1;
 $(function () {
     l = abp.localization.getResource('BookStore');
-    var createModal = new abp.ModalManager(abp.appPath + 'Authors/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Authors/EditModal');
+    var createModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Authors/CreateModal',
+        scriptUrl: '/Pages/Authors/Create.js'
+    });
+    var editModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Authors/EditModal',
+        scriptUrl: '/Pages/Authors/Edit.js'
+    });
     var listBook = new abp.ModalManager(abp.appPath + 'Authors/ListBook');
-
+    var detailModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Authors/DetailModal',
+        scriptUrl: '/Pages/Authors/Edit.js'
+    })
     //get the value of the search input
     getFilter = function () {
         return {
@@ -18,38 +28,38 @@ $(function () {
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,
-            order: true,
+            order: ["1","asc"],
             searching: false,
             scrollX: true,
             
             ajax: abp.libs.datatables.createAjax(acme.bookStore.authors.author.getList, getFilter),
             columnDefs: [
+                
                 {
                     title: l('Name'),
                     data: "name",
-                    width: "200px",
-                    className: "text-center",
+                    orderable: true,
                 },
                 {
                     title: l('DoB'),
                     data: 'doB',
+                    orderable: true,
                     render: function (data) {
                         return luxon
                             .DateTime
                             .fromISO(data, {
                                 locale: abp.localization.currentCulture.name
-                            }).toLocaleString();
+                            }).toFormat('dd/MM/yyyy');
                     },
-                    width: "150px",
                     className: "text-center",
                 },
-                {
-                    title: l('ShortBio'),
-                    data: 'shortBio',
-                    className: "text-center"
+                //{
+                //    title: l('ShortBio'),
+                //    data: 'shortBio',
+                //    className: "text-center"
                     
 
-                },
+                //},
                 {
                     title: l('Status'),
                     data: { status: "status", id: "id" },
@@ -64,7 +74,6 @@ $(function () {
                             '</label >';
                         return str;
                     },
-                    width: "150px",
                     className: "text-center",
                 },
                 {
@@ -74,9 +83,17 @@ $(function () {
                         items:
                             [
                                 {
+                                    text: l('Detail'),
+                                    action: function (data) {
+                                        detailModal.open({ id: data.record.id });
+                                        //window.location = "https://localhost:44338/Authors/EditModal?Id=" + data.record.id;
+                                    }
+                                },
+                                {
                                     text: l('Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
+                                        //window.location = "https://localhost:44338/Authors/EditModal?Id=" + data.record.id;
                                     }
                                 },
                                 {
@@ -128,11 +145,16 @@ $(function () {
     $('#NewAuthor').click(function (e) {
         e.preventDefault();
         createModal.open();
+        //window.location = "https://localhost:44338/Authors/CreateModal";
     });
 
     $("input[name='Search'").keyup(function () {
         dataTable.ajax.reload();
         console.log(getFilter);
+    });
+
+    $("#from-datepicker").datepicker({
+        format: 'yyyy-mm-dd' //can also use format: 'dd-mm-yyyy'     
     });
 
     
@@ -162,6 +184,8 @@ function ChangeStatus(id, status) {
             
             
         });
+
+
 };
 
 function ListBookOfAuthor(id) {
@@ -263,7 +287,6 @@ function change(el) {
 }
 
 function checkDate() {
-    debugger;
     var ngay = $("input[name='Author.DoB']").val();
     var today = new Date(); 
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -274,13 +297,8 @@ function checkDate() {
         document.getElementById("save").disabled = true;
     }
     else {
-        if (homnay.getFullYear() - dateInput.getFullYear() > 130 || homnay.getFullYear() - dateInput.getFullYear() < 10 ) {
-            document.getElementById('errorDate').innerHTML = l('Age must be more than 10 and less than 130');
-            document.getElementById("save").disabled = true;
-        }
-        else {
+        
             document.getElementById('errorDate').innerHTML = '';
             document.getElementById("save").disabled = false;
-        }
     }
 }

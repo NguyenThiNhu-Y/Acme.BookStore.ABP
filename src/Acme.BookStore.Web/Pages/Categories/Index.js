@@ -1,11 +1,30 @@
 ﻿var categroryAppService;
 var dataTable;
 var l;
+var getFilter;
 $(function () {
     l = abp.localization.getResource('BookStore');
-    var createModal = new abp.ModalManager(abp.appPath + 'Categories/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Categories/EditModal');
+    var createModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Categories/CreateModal',
+        scriptUrl : '/Pages/ckeditor.js'
+    });
+    var editModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Categories/EditModal',
+        scriptUrl: '/Pages/ckeditor.js'
+    });
+    var detailModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Categories/DetailModal',
+        scriptUrl: '/Pages/ckeditor.js'
+    });
     var deleteModal = new abp.ModalManager(abp.appPath + 'Categories/EditModal');
+    var listBook = new abp.ModalManager(abp.appPath + 'Categories/ListBook');
+
+    getFilter = function () {
+        return {
+            filterText: $("input[name='Search']").val(),
+        };
+    };
+
     categroryAppService = acme.bookStore.categories.category;
 
      dataTable = $('#CategoriesTable').DataTable(
@@ -15,18 +34,14 @@ $(function () {
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(acme.bookStore.categories.category.getList),
+            ajax: abp.libs.datatables.createAjax(acme.bookStore.categories.category.getList, getFilter),
             columnDefs: [
 
                 {
                     title: l('Name'),
                     data: "name"
                 },
-                //{
-                //    title: l('Parent'),
-                //    data: "idParen",
-
-                //},
+                
                 {
                     title: l('CategoryParent'),
                     data: "categoryParent",
@@ -40,10 +55,7 @@ $(function () {
                         return img;
                     }
                 },
-                {
-                    title: l('Describe'),
-                    data: "describe",
-                },
+                
                 {
                     title: l('CountBook'),
                     data: "countBook",
@@ -52,13 +64,7 @@ $(function () {
                     title: l('Status'),
                     data: { status: "status", id:"id"} ,
                     render: function (data) {
-                        //var stt = "Hide";
-                        //if (data.status) {
-                        //    stt = "Visibility"
-                        //}
-                        ////var btn = `<button class="btn btn-primary" id="${data.id}" type="Button" onclick="Change(this.id)">${stt}</button>`;
-                        //var btn = `<a href="javascript:void(0)" class="btn btn-primary" id="${data.id}" onclick="ChangeStatus(this.id)">${stt}</a>`;
-                        //return btn;
+                        
                         var check = '';
                         if (data.status == 1)
                             check = "checked";
@@ -76,6 +82,15 @@ $(function () {
                         items:
                             [
                                 {
+                                    text: l('Detail'),
+                                    action: function (data) {
+                                        dataTable.ajax.reload();
+                                        detailModal.open({ id: data.record.id });
+                                        
+                                        //location.reload();
+                                    }
+                                },
+                                {
                                     text: l('Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
@@ -85,7 +100,7 @@ $(function () {
                                 {
                                     text: l('Delete'),
                                     confirmMessage: function (data) {
-                                        return l('CategoryDeletionConfirmationMessage', data.record.name);
+                                        return l('Delete', data.record.name);
                                     },
                                     action: function (data) {
                                         acme.bookStore.categories.category
@@ -100,6 +115,13 @@ $(function () {
                                                     abp.message.error(l("NotifyDeleteAuthor"));
                                                 }
                                             });
+                                    }
+                                },
+                                {
+                                    text: l('Books'),
+                                    action: function (data) {
+                                        listBook.open({ id: data.record.id });
+                                        dataTable.ajax.reload();
                                     }
                                 }
                             ]
@@ -123,10 +145,16 @@ $(function () {
     $('#StatusButton').click(function (e) {
         acme.bookStore.categories.category.changStatus(data.record.id);
     });
+
+    $("input[name='Search'").keyup(function () {
+        dataTable.ajax.reload();
+        console.log(getFilter);
+    });
     
 });
 
 function ChangeStatus(id, status) {
+    debugger;
     if ($('#' + id).is(':checked')) {
         $("#" + id).prop("checked", false);
     }
@@ -144,7 +172,7 @@ function ChangeStatus(id, status) {
         .then(function (confirmed) {
 
             if (confirmed) {
-                acme.bookStore.authors.author.changeStatus(id)
+                acme.bookStore.categories.category.changStatus(id)
                 abp.message.success(l('YourChangesHaveBeenSuccessfullySaved'), l('Congratulations'));
                 dataTable.ajax.reload();
             }

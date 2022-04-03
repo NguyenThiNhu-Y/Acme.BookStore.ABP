@@ -10,5 +10,9 @@ namespace Acme.BookStore.Books
         public string FilterText { get; set; }
         public string Name { get; set; }
 
+        public Guid? IdAuthor { get; set; }
+
+        public Guid? IdCategory { get; set; }
+
     }
 }

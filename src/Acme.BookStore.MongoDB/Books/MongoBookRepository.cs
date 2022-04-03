@@ -19,15 +19,15 @@ namespace Acme.BookStore.Books
 
         }
 
-        public async Task<long> GetCountAsync(string filterText = null, string name = null, CancellationToken cancellationToken = default)
+        public async Task<long> GetCountAsync(string filterText = null, string name = null, Guid? IdAuthor = null, Guid? IdCategory = null, CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, name);
+            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, name,IdAuthor, IdCategory);
             return await query.As<IMongoQueryable<Book>>().LongCountAsync(GetCancellationToken(cancellationToken));
         }
 
-        public async Task<List<Book>> GetListAsync(string filterText = null, string name = null, string sorting = null, int maxResultCount = int.MaxValue, int skipCount = 0, CancellationToken cancellationToken = default)
+        public async Task<List<Book>> GetListAsync( string filterText = null, string name = null, Guid? IdAuthor = null, Guid? IdCategory = null, string sorting = null, int maxResultCount = int.MaxValue, int skipCount = 0, CancellationToken cancellationToken = default)
         {
-            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, name);
+            var query = ApplyFilter((await GetMongoQueryableAsync(cancellationToken)), filterText, name, IdAuthor, IdCategory);
             return await query.As<IMongoQueryable<Book>>()
                 .OrderByDescending(x => x.CreationTime)
                 .PageBy<Book, IMongoQueryable<Book>>(skipCount, maxResultCount)
@@ -36,11 +36,15 @@ namespace Acme.BookStore.Books
 
         protected virtual IQueryable<Book> ApplyFilter(
             IQueryable<Book> query,
-            string filterText, string name = null)
+            
+            string filterText, string name = null, Guid? idAuthor = null, Guid? idCategory = null)
         {
             var dbContext = GetDbContextAsync();
             var getDashboards = query
-                .WhereIf(!string.IsNullOrWhiteSpace(filterText), e => e.Name.ToLower().Contains(filterText.ToLower()));
+                .WhereIf(!string.IsNullOrWhiteSpace(filterText), e => e.Name.ToLower().Contains(filterText.ToLower()))
+                .WhereIf(idAuthor.HasValue, e => e.IdAuthor == idAuthor)
+                .WhereIf(idCategory.HasValue, e =>e.Type == idCategory)
+                ;
             return getDashboards;
         }
     }

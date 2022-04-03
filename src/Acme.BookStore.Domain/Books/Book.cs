@@ -13,7 +13,8 @@ namespace Acme.BookStore.Books
         public Guid Type { get; set; }
         public DateTime PublishDate { get; set; }
         public float Price { get; set; }
-
         public Guid IdAuthor { get; set; }
+        public string Image { get; set; }
+        public string Describe { get; set; }
     }
 }

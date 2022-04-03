@@ -1,8 +1,29 @@
-﻿$(function () {
+﻿
+var getFilterCategory;
+var getFilterAuthor;
+var getFilter;
+$(function () {
     var l = abp.localization.getResource('BookStore');
     var createModal = new abp.ModalManager(abp.appPath + 'Books/CreateModal');
     var editModal = new abp.ModalManager(abp.appPath + 'Books/EditModal');
-
+    //getFilterCategory = function () {
+    //    return {
+    //        idCategory: $("select[name='CategoryId']").val(),
+    //    };
+    //};
+    //getFilterAuthor = function () {
+    //    return {
+    //        idAuthor: $("select[name='AuthorId']").val(),
+    //    };
+    //};
+    
+    getFilter = function () {
+        return {
+            filterText: $("input[name='Search']").val(),
+            idAuthor: $("select[name='AuthorId']").val(),
+            idCategory: $("select[name='CategoryId']").val()
+        };
+    };
     var dataTable = $('#BooksTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
@@ -10,7 +31,7 @@
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(acme.bookStore.books.book.getList),
+            ajax: abp.libs.datatables.createAjax(acme.bookStore.books.book.getList, getFilter),
             columnDefs: [
                 {
                     title: l('Name'),
@@ -102,6 +123,19 @@
     $('#NewBookButton').click(function (e) {
         e.preventDefault();
         createModal.open();
+    });
+
+    $("select[name='CategoryId']").change(function () {
+        dataTable.ajax.reload();
+        console.log(getFilterCategory);
+    });
+    $("select[name='AuthorId']").change(function () {
+        dataTable.ajax.reload();
+        console.log(getFilterCategory);
+    });
+    $("input[name='Search'").keyup(function () {
+        dataTable.ajax.reload();
+        console.log(getFilter);
     });
 });
 

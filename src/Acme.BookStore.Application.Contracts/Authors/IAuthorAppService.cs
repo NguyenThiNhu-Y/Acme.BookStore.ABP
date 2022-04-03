@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
+using Microsoft.AspNetCore.Http;
+
 namespace Acme.BookStore.Authors
 {
     public interface IAuthorAppService : IApplicationService
@@ -25,6 +27,8 @@ namespace Acme.BookStore.Authors
         Task ChangeStatus(Guid Id);
 
         Task<List<LookupDto<Guid?>>> GetListAuthorLookupAsync();
+
+        string UploadImage(IFormFile file);
 
     }
 }

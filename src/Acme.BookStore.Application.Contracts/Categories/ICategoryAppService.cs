@@ -22,6 +22,7 @@ namespace Acme.BookStore.Categories
         //Task<PagedResultDto<LookupDto<Guid?>>> GetListCategoryLookupAsync(LookupRequestDto input);
 
         Task<List<LookupDto<Guid?>>> GetListCategoryLookupAsync();
+        Task<List<LookupDto<Guid?>>> GetListCategoryEditLookupAsync(Guid Id);
 
         Task<int> UpdateCountBook(Guid id, bool add);
 

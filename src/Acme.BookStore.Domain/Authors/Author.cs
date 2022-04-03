@@ -16,6 +16,8 @@ namespace Acme.BookStore.Authors
         public string ShortBio { get; set; }
 
         public Status Status { get; set; }
+
+        public string Imgae { get; set; }
         public Author()
         {
 

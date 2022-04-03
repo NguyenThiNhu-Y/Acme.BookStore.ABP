@@ -34,7 +34,7 @@ namespace Acme.BookStore.Web.Pages.Categories
             {
                 new SelectListItem("Choose","")
             };
-            var getList = await _categoryAppService.GetListCategoryLookupAsync();
+            var getList = await _categoryAppService.GetListCategoryEditLookupAsync(Id);
             foreach(var item in getList)
             {
                 CategoryIdFilterItems.Add(new SelectListItem(item.DisplayName, item.Id.ToString()));

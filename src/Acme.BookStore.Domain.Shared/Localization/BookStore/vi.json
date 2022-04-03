@@ -14,6 +14,7 @@
     "Close": "Đóng",
     "Delete": "Xóa",
     "Edit": "Chỉnh sửa",
+    "Detail": "Chi tiết",
     "Book": "Sách",
     "Books": "Sách",
     "PublishDate": "Ngày xuất bản",
@@ -58,7 +59,10 @@
     "Categories": "Danh sách loại sách",
     "BlockTheCategory": "Khóa danh mục",
     "UnblockTheCategory": "Mở khóa danh mục",
-    "NotifyDeleteCategory": "Bạn không thể xóa. Vì danh sách sách không trống"
+    "NotifyDeleteCategory": "Bạn không thể xóa. Vì danh sách sách không trống",
+    "DetailAuthor": "Chi tiết tác giả",
+    "BooksOfCategory" : "Danh sách sách"
+
 
   }
 }

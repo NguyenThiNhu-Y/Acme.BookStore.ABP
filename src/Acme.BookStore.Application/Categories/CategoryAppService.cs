@@ -41,6 +41,7 @@ namespace Acme.BookStore.Categories
 
         public async Task<CategoryDto> CreateAsync(CreateUpdatecategoryDto input)
         {
+            input.Status = Status.Visibility;
             var categrory = ObjectMapper.Map<CreateUpdatecategoryDto, Category>(input);
             await _categoryRepository.InsertAsync(categrory);
             return ObjectMapper.Map<Category, CategoryDto>(categrory);
@@ -69,7 +70,22 @@ namespace Acme.BookStore.Categories
         public async Task<CategoryDto> GetAsync(Guid id)
         {
             var category = await _categoryRepository.FindAsync(id);
-            return ObjectMapper.Map<Category, CategoryDto>(category);
+            Category categoryParent = new Category();
+            if (category.IdParen != null)
+            {
+                categoryParent = await _categoryRepository.FindAsync(category.IdParen.Value);
+            }
+            
+            string ctgParent = " ";
+            if (categoryParent != null)
+            {
+                
+                    ctgParent = categoryParent.Name;
+                
+            }
+            var result = ObjectMapper.Map<Category, CategoryDto>(category);
+            result.CategoryParent = ctgParent;
+            return result;
         }
 
         
@@ -110,7 +126,8 @@ namespace Acme.BookStore.Categories
                     Describe = i.Describe,
                     CountBook = countBooks,
                     Status = i.Status,
-                    IdParen = i.IdParen
+                    IdParen = i.IdParen,
+                    
                 });
             }
             return new PagedResultDto<CategoryDto>
@@ -161,11 +178,15 @@ namespace Acme.BookStore.Categories
             List<LookupDto<Guid?>> list = new List<LookupDto<Guid?>>();
             foreach (var item in ListCategory)
             {
-                list.Add(new LookupDto<Guid?>
+                
                 {
-                    Id = item.ID,
-                    DisplayName = item.Name
-                });
+                    list.Add(new LookupDto<Guid?>
+                    {
+                        Id = item.ID,
+                        DisplayName = item.Name
+                    });
+                }
+                
             }
             return list;
 
@@ -195,6 +216,26 @@ namespace Acme.BookStore.Categories
                 category.Status = Status.Hide;
             }
             await _categoryRepository.UpdateAsync(category);
+        }
+
+        public async Task<List<LookupDto<Guid?>>> GetListCategoryEditLookupAsync(Guid Id)
+        {
+            List<LookupDto<Guid?>> list = await GetListCategoryLookupAsync();
+            List<LookupDto<Guid?>> listResult = new List<LookupDto<Guid?>>();
+            foreach (var item in list)
+            {
+                if(item.Id != Id)
+                {
+                    listResult.Add(new LookupDto<Guid?>
+                    {
+                        Id = item.Id,
+                        DisplayName = item.DisplayName
+                    });
+                }
+
+            }
+            return listResult;
+
         }
     }
 }

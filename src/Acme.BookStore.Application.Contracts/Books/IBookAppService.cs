@@ -21,5 +21,6 @@ namespace Acme.BookStore.Books
         Task<List<LookupDto<Guid?>>> GetListCategoryLookupAsync();
 
         Task<List<BookDto>> GetListByIdAuthor(Guid idAuthor);
+        Task<List<BookDto>> GetListByIdCategory(Guid idCategory);
     }
 }

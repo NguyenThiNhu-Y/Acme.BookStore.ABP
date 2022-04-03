@@ -14,5 +14,8 @@ namespace Acme.BookStore.Books
         public string? CategoryParent { get; set; }
         public Guid IdAuthor { get; set; }
         public string Author { get; set; }
+
+        public string Image { get; set; }
+        public string Describe { get; set; }
     }
 }

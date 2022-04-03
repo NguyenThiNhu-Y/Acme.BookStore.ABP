@@ -1,0 +1,53 @@
+﻿@page
+@using Acme.BookStore.Localization
+@using Microsoft.Extensions.Localization
+@using Acme.BookStore.Web.Pages.Categories
+@model ListBookModel
+@inject IStringLocalizer<BookStoreResource> L
+@{
+    Layout = null;
+}
+@section scripts{
+    <abp-script src="/Pages/Categories/Index.js"></abp-script>
+}
+<abp-modal size="ExtraLarge">
+    <abp-modal-header>
+        <abp-row>
+            <abp-column>@L["BooksOfCategory"]</abp-column>
+        </abp-row>
+    </abp-modal-header>
+    <abp-modal-body>
+        <abp-table striped-rows="true" id="BookOfAuthorsTable">
+            <tr>
+                <th>STT</th>
+                <th>@L["Name"]</th>
+                <th>@L["Author"]</th>
+                <th>@L["Price"]</th>
+            </tr>
+            @if (Model.Books.Count > 0)
+            {
+                var i = 1;
+                @foreach (var item in Model.Books)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.Name</td>
+                        <td>@item.Author</td>
+                        <td>@String.Format("{0:0,0 vnđ}", @item.Price)</td>
+                    </tr>
+                    i++;
+                }
+            }
+            else
+            {
+                <tr class="odd">
+                    <td valign="top" colspan="3" class="dataTables_empty text-center">
+                        @L["NoDataAvailable"]
+                    </td>
+                </tr>
+            }
+        </abp-table>
+
+
+    </abp-modal-body>
+</abp-modal>

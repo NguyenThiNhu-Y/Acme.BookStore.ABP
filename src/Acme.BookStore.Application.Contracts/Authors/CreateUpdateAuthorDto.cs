@@ -13,9 +13,12 @@ namespace Acme.BookStore.Authors
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DoB { get; set; }
 
         [StringLength(255)]
         public string ShortBio { get; set; }
+
+        public string Image { get; set; }
     }
 }

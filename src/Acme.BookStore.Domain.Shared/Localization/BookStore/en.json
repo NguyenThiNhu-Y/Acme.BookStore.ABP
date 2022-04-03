@@ -12,6 +12,7 @@
     "Close": "Close",
     "Delete": "Delete",
     "Edit": "Edit",
+    "Detail": "Detail",
     "Book": "Books",
     "PublishDate": "Publish date",
     "NewBook": "New book",
@@ -72,6 +73,8 @@
     "Categories": "Categories",
     "BlockTheCategory": "Block The Category",
     "UnblockTheCategory": "Unblock The Category",
-    "NotifyDeleteCategory": "You cannot delete. Because the list of books is not empty"
+    "NotifyDeleteCategory": "You cannot delete. Because the list of books is not empty",
+    "DetailAuthor": "Detail Author",
+    "BooksOfCategory": "Books Of Category"
   }
 }

@@ -85,8 +85,8 @@ namespace Acme.BookStore.Books
 
         public async Task<PagedResultDto<BookDto>> GetListAsync(GetBookInput input)
         {
-            var count = await _bookRepository.GetCountAsync(input.FilterText, input.Name);
-            var items = await _bookRepository.GetListAsync(input.FilterText, input.Name, input.Sorting, input.MaxResultCount, input.SkipCount);
+            var count = await _bookRepository.GetCountAsync(input.FilterText, input.Name, input.IdAuthor, input.IdCategory);
+            var items = await _bookRepository.GetListAsync( input.FilterText, input.Name, input.IdAuthor, input.IdCategory, input.Sorting, input.MaxResultCount, input.SkipCount);
             var result = new List<BookDto>();
             foreach (var i in items)
             {
@@ -130,12 +130,17 @@ namespace Acme.BookStore.Books
             foreach(var item in listAllBooks)
             {
                 var category = (await _categoryRepository.FindAsync(item.Type));
+                var author = (await _authorRepository.FindAsync(item.IdAuthor));
                 string ctgParent = "";
                 if (category != null)
                 {
                     ctgParent = category.Name;
                 }
-                
+                string authorName = "";
+                if (author != null)
+                {
+                    authorName = author.Name;
+                }
                 if (item.IdAuthor == idAuthor)
                 {
                     result.Add(new BookDto()
@@ -147,7 +152,46 @@ namespace Acme.BookStore.Books
                         Price = item.Price,
                         Type = item.Type,
                         Id = item.Id,
-                        IdAuthor = item.IdAuthor
+                        IdAuthor = item.IdAuthor,
+                        Author = authorName
+                    });
+                }
+            }
+            return result;
+        }
+
+        public async Task<List<BookDto>> GetListByIdCategory(Guid idCategory)
+        {
+            var listAllBooks = await _bookRepository.GetListAsync();
+            List<BookDto> result = new List<BookDto>();
+            foreach (var item in listAllBooks)
+            {
+                var category = (await _categoryRepository.FindAsync(item.Type));
+                var author = (await _authorRepository.FindAsync(item.IdAuthor));
+                string ctgParent = "";
+                if (category != null)
+                {
+                    ctgParent = category.Name;
+                }
+                string authorName = "";
+                if (author != null)
+                {
+                    authorName = author.Name;
+                }
+
+                if (item.Type == idCategory)
+                {
+                    result.Add(new BookDto()
+                    {
+
+                        CategoryParent = ctgParent,
+                        Name = item.Name,
+                        PublishDate = item.PublishDate,
+                        Price = item.Price,
+                        Type = item.Type,
+                        Id = item.Id,
+                        IdAuthor = item.IdAuthor,
+                        Author = authorName
                     });
                 }
             }

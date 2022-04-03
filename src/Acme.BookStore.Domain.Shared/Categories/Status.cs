@@ -6,7 +6,7 @@ namespace Acme.BookStore.Categories
 {
     public static class DefaultUploadImage
     {
-        public const string UploadImageCategory = "/ImageCategory/";
+        public const string UploadImageCategory = "/ImageCategories/";
     }
     public enum Status
     {

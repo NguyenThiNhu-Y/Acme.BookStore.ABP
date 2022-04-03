@@ -32,6 +32,7 @@ namespace Acme.BookStore.Web.Pages.Authors
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            
             await _authorAppService.UpdateAsync(Id, Author);
             return NoContent();
         }

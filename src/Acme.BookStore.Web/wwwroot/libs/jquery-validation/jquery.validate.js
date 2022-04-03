@@ -1255,9 +1255,9 @@ $.extend( $.validator, {
 		var rules = {},
 			validator = $.data( element.form, "validator" );
 
-		if ( validator.settings.rules ) {
-			rules = $.validator.normalizeRule( validator.settings.rules[ element.name ] ) || {};
-		}
+		//if ( validator.settings.rules ) {
+		//	rules = $.validator.normalizeRule( validator.settings.rules[ element.name ] ) || {};
+		//}
 		return rules;
 	},
 

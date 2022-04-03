@@ -6,7 +6,10 @@
 @inject IStringLocalizer<BookStoreResource> L
 @section scripts{
     <abp-script src="/Pages/Authors/Index.js"></abp-script>
+
     <link rel="stylesheet" href="~/CSS/Style.css" />
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
 }
 
 <abp-card>
@@ -18,13 +21,15 @@
                             text="@L["NewAuthor"].Value"
                             icon="plus"
                             button-type="Primary" />
+                @*<abp-button href="/Authors/CreateModal" class="btn btn-primary " icon="plus">@L["NewAuthor"]</abp-button>*@
             </abp-column>
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-        <abp-column size-md ="_4" style="float:right" >
-            <input name="Search" placeholder="@L["Search"]" class="form-control"  /> @* add search input *@
+        <abp-column size-md="_4" style="float:right">
+            <input name="Search" placeholder="@L["Search"]" class="form-control" /> @* add search input *@
         </abp-column>
         <abp-table striped-rows="true" id="AuthorsTable"></abp-table>
     </abp-card-body>
 </abp-card>
+

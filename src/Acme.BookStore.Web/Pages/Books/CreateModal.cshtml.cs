@@ -35,7 +35,7 @@ namespace Acme.BookStore.Web.Pages.Books
             _authorAppService = authorAppService;
         }
 
-        public async void OnGet()
+        public async Task OnGet()
         {
             Book = new CreateUpdateBookDto();
             CategoryIdFilterItems = new List<SelectListItem>();

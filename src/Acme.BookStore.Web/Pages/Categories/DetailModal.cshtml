@@ -1,0 +1,45 @@
+﻿@page
+@using Acme.BookStore.Localization
+@using Acme.BookStore.Web.Pages.Categories
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Acme.BookStore.Categories
+@model DetailModalModel
+@inject IStringLocalizer<BookStoreResource> L
+@{
+    Layout = null;
+}
+
+<form method="post" asp-page="/Categories/DetailModal">
+    <abp-modal size="ExtraLarge">
+        <abp-modal-header title="@L["Detail"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-input asp-for="Id" />
+
+
+
+
+            @{ var path = "/ImageCategories/" + Model.Category.Image;}
+
+            <div class="mb-3">
+                <label>@L["Name"]</label>
+                <input asp-for="Category.Name" readonly class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>@L["Image"]</label>
+                <br />
+                <img src="@path" onerror="this.onerror=null;this.src='/ImageCategories/imageDefault.jpg'" width="100" height="100"/>
+            </div>
+            
+            <div class="mb-3">
+                <label>@L["CategoryParent"]</label>
+                <input asp-for="Category.CategoryParent"  readonly class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>@L["Describe"]</label>
+                <textarea asp-for="Category.Describe" readonly id="@Model.Category.Id" data-id="@Model.Category.Id"/>
+            </div>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

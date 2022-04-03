@@ -1,8 +1,11 @@
 ﻿using Acme.BookStore.Books;
 using Acme.BookStore.Shared;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +20,12 @@ namespace Acme.BookStore.Authors
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IBookRepository _bookRepository;
-        public AuthorAppService(IAuthorRepository authorRepository, IBookRepository bookRepository)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public AuthorAppService(IAuthorRepository authorRepository, IBookRepository bookRepository, IWebHostEnvironment hostEnvironment)
         {
             _authorRepository = authorRepository;
             _bookRepository = bookRepository;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task<AuthorDto> ChangeNameAsync([NotNull] AuthorDto author, [NotNull] string newName)
@@ -141,6 +146,27 @@ namespace Acme.BookStore.Authors
             author.ShortBio = input.ShortBio;
             await _authorRepository.UpdateAsync(author);
             return ObjectMapper.Map<Author, AuthorDto>(author);
+        }
+
+        public string UploadImage(IFormFile file)
+        {
+            string filePath = "";
+            if (file!= null)
+            {
+                var extension = Path.GetExtension(file.FileName).ToLower();
+                var wwwRootPath = _hostEnvironment.WebRootPath;
+                var filename = "Author" + DateTime.Now.ToString("yymmssfff") + extension;
+                var image = DefaultUploadImage.UploadImageAuthor + filename;
+                var path = Path.Combine(wwwRootPath + image);
+
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                filePath = "https://localhost:44338/ImageAuthor/" + filename;
+
+            }
+            return filePath;
         }
     }
 }
