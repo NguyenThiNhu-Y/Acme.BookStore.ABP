@@ -1,7 +1,5 @@
 ﻿$(function () {
 
-    el = document.getElementsByName("Category.Describe");
-    id = el[0].dataset.id;
-    var editor = CKEDITOR.replace(id);
+    var editor = CKEDITOR.replace('short');
     CKFinder.setupCKEditor(editor, '/ckfinder/');
 })

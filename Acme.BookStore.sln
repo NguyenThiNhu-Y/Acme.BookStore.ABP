@@ -1,9 +1,16 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.BookStore.Domain", "src\Acme.BookStore.Domain\Acme.BookStore.Domain.csproj", "{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Demo", "modules\Volo.BasicTheme\test\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Demo\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Demo.csproj", "{14800209-15D8-4009-8F8D-D22477FEAB17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.Demo.Tests", "modules\Volo.BasicTheme\test\Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.Demo.Tests\Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.Demo.Tests.csproj", "{7A78435D-6838-4EEA-A541-2FB75E7FBEC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.Demo", "modules\Volo.BasicTheme\test\Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.Demo\Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.Demo.csproj", "{BFC27E0E-33E0-4E22-AD72-2E07F970F64C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Volo.BasicTheme.Tests", "Volo.BasicTheme.Tests", "{90D6085A-4C43-49AF-9EB6-B60B5CACBE12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.BookStore.Application", "src\Acme.BookStore.Application\Acme.BookStore.Application.csproj", "{1A94A50E-06DC-43C1-80B5-B662820EC3EB}"
 EndProject
@@ -47,6 +54,18 @@ Global
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14800209-15D8-4009-8F8D-D22477FEAB17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14800209-15D8-4009-8F8D-D22477FEAB17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14800209-15D8-4009-8F8D-D22477FEAB17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14800209-15D8-4009-8F8D-D22477FEAB17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A78435D-6838-4EEA-A541-2FB75E7FBEC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A78435D-6838-4EEA-A541-2FB75E7FBEC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A78435D-6838-4EEA-A541-2FB75E7FBEC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A78435D-6838-4EEA-A541-2FB75E7FBEC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC27E0E-33E0-4E22-AD72-2E07F970F64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC27E0E-33E0-4E22-AD72-2E07F970F64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC27E0E-33E0-4E22-AD72-2E07F970F64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC27E0E-33E0-4E22-AD72-2E07F970F64C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A94A50E-06DC-43C1-80B5-B662820EC3EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A94A50E-06DC-43C1-80B5-B662820EC3EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A94A50E-06DC-43C1-80B5-B662820EC3EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -109,6 +128,10 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{554AD327-6DBA-4F8F-96F8-81CE7A0C863F} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{14800209-15D8-4009-8F8D-D22477FEAB17} = {90D6085A-4C43-49AF-9EB6-B60B5CACBE12}
+		{7A78435D-6838-4EEA-A541-2FB75E7FBEC8} = {90D6085A-4C43-49AF-9EB6-B60B5CACBE12}
+		{BFC27E0E-33E0-4E22-AD72-2E07F970F64C} = {90D6085A-4C43-49AF-9EB6-B60B5CACBE12}
+		{90D6085A-4C43-49AF-9EB6-B60B5CACBE12} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{1A94A50E-06DC-43C1-80B5-B662820EC3EB} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{068855E8-9240-4F1A-910B-CF825794513B} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{50B2631D-129C-47B3-A587-029CCD6099BC} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}

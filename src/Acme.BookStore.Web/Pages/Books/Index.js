@@ -4,7 +4,10 @@ var getFilterAuthor;
 var getFilter;
 $(function () {
     var l = abp.localization.getResource('BookStore');
-    var createModal = new abp.ModalManager(abp.appPath + 'Books/CreateModal');
+    var createModal = new abp.ModalManager({
+        viewUrl: abp.appPath + 'Books/CreateModal',
+        scriptUrl: '/Pages/ckeditor.js'
+    });
     var editModal = new abp.ModalManager(abp.appPath + 'Books/EditModal');
     //getFilterCategory = function () {
     //    return {
@@ -34,9 +37,22 @@ $(function () {
             ajax: abp.libs.datatables.createAjax(acme.bookStore.books.book.getList, getFilter),
             columnDefs: [
                 {
+                    title: l('STT'),
+                    data: "stt"
+                },
+                {
                     title: l('Name'),
                     data: "name"
                 },
+                {
+                    title: l("Image"),
+                    data: { image: "image", id: "id" },
+                    render: function (data) {
+                        var img = `<img src="/ImageBooks/${data.image}" id="${data.id}" width="100px" height="100px" onerror="this.onerror=null;this.src='/ImageBooks/imageDefault.jpg'"/>`;
+                        return img;
+                    }
+                },
+                
                 {
                     title: l('CategoryParent'),
                     data: "categoryParent",

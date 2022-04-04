@@ -5,10 +5,12 @@
 @model IndexModel
 @inject IStringLocalizer<BookStoreResource> L
 @section scripts {
-    <abp-script src="/Pages/Categories/Index.js"></abp-script>
+    <script type="module" src="/Pages/Categories/Index.js"></script>
     <script src="~/ckeditor/ckeditor.js"></script>
     <script src="~/ckfinder/ckfinder.js"></script>
+
 }
+
 <link rel="stylesheet" href="~/CSS/Style.css" />
 <abp-card>
     <abp-card-header>

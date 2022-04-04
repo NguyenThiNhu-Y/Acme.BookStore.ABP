@@ -2,15 +2,17 @@
 var dataTable;
 var l;
 var getFilter;
+
+
 $(function () {
     l = abp.localization.getResource('BookStore');
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Categories/CreateModal',
-        scriptUrl : '/Pages/ckeditor.js'
+        //scriptUrl : '/Pages/ckeditor.js'
     });
     var editModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Categories/EditModal',
-        scriptUrl: '/Pages/ckeditor.js'
+        //scriptUrl: '/Pages/ckeditor.js'
     });
     var detailModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Categories/DetailModal',
@@ -36,7 +38,10 @@ $(function () {
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(acme.bookStore.categories.category.getList, getFilter),
             columnDefs: [
-
+                {
+                    title: l('STT'),
+                    data: "stt"
+                },
                 {
                     title: l('Name'),
                     data: "name"
@@ -83,10 +88,12 @@ $(function () {
                             [
                                 {
                                     text: l('Detail'),
-                                    action: function (data) {
+                                    action: function (data) {                                        
                                         dataTable.ajax.reload();
-                                        detailModal.open({ id: data.record.id });
-                                        
+                                        //window.location = "https://localhost:44338/Categories/DetailModal?Id=" + data.record.id;
+                                        detailModal.open({ id: data.record.id });                                      
+
+                                       
                                         //location.reload();
                                     }
                                 },

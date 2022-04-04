@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Acme.BookStore.Authors;
 using Acme.BookStore.Books;
 using Acme.BookStore.Categories;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
+using DefaultUploadImage = Acme.BookStore.Books.DefaultUploadImage;
 
 namespace Acme.BookStore.Web.Pages.Books
 {
@@ -28,11 +32,14 @@ namespace Acme.BookStore.Web.Pages.Books
         public Guid? AuthorId { get; set; }
         public List<SelectListItem> AuthorIdFilterItems { get; set; }
 
-        public CreateModalModel(IBookAppService bookAppService, ICategoryAppService categoryAppService, IAuthorAppService authorAppService)
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public CreateModalModel(IBookAppService bookAppService, ICategoryAppService categoryAppService, IAuthorAppService authorAppService, IWebHostEnvironment hostEnvironment)
         {
             _bookAppService = bookAppService;
             _categoryAppService = categoryAppService;
             _authorAppService = authorAppService;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task OnGet()
@@ -61,11 +68,24 @@ namespace Acme.BookStore.Web.Pages.Books
             }
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile file)
         {
+            if(file!= null)
+            {
+                var extension = Path.GetExtension(file.FileName).ToLower();
+                var wwwRootPath = _hostEnvironment.WebRootPath;
+                var filename = "Book" + DateTime.Now.ToString("yymmssfff") + extension;
+                var image = DefaultUploadImage.UploadImageBook + filename;
+                var path = Path.Combine(wwwRootPath + image);
+                
+                
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                Book.Image = filename;
+            }
             await _bookAppService.CreateAsync(Book);
-            
-            
             return NoContent();
         }
     }

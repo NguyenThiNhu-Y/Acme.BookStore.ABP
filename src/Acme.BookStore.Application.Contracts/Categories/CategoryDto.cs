@@ -7,6 +7,7 @@ namespace Acme.BookStore.Categories
 {
     public class CategoryDto : AuditedEntityDto<Guid>
     {
+        public int STT { get; set; }
         public string Name { get; set; }
         public Guid? IdParen { get; set; }
         public string Image { get; set; }

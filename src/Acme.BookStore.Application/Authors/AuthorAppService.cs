@@ -21,6 +21,10 @@ namespace Acme.BookStore.Authors
         private readonly IAuthorRepository _authorRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IWebHostEnvironment _hostEnvironment;
+
+        private static int SkipCount=0;
+        private static int MaxResultCount=0;
+
         public AuthorAppService(IAuthorRepository authorRepository, IBookRepository bookRepository, IWebHostEnvironment hostEnvironment)
         {
             _authorRepository = authorRepository;
@@ -103,13 +107,47 @@ namespace Acme.BookStore.Authors
 
         public async Task<PagedResultDto<AuthorDto>> GetListAsync(GetAuthorInput input)
         {
-            var count = await _authorRepository.GetCountAsync(input.FilterText, input.Name);
-            var items = await _authorRepository.GetListAsync(input.FilterText, input.Name, input.Sorting, input.MaxResultCount, input.SkipCount);
+            List<Author> items = new List<Author>();
+            if (SkipCount == 0 && MaxResultCount == 0)
+            {
+                SkipCount = input.SkipCount;
+                MaxResultCount = input.MaxResultCount;
+            }
 
+            var count = await _authorRepository.GetCountAsync(input.FilterText, input.Name);
+            //if (input.FilterText != null)
+            //{
+            //    items = await _authorRepository.GetListAsync(input.FilterText, input.Name, input.Sorting, MaxResultCount, SkipCount);
+            //}
+            //else
+            {
+                items = await _authorRepository.GetListAsync(input.FilterText, input.Name, input.Sorting, input.MaxResultCount, input.SkipCount);
+            }
+            var rs = ObjectMapper.Map<List<Author>, List<AuthorDto>>(items);
+            var index = input.SkipCount+1;
+            List<AuthorDto> result = new List<AuthorDto>();
+            foreach(var item in rs)
+            {
+                item.STT = index++;
+            }
+            //if (input.FilterText != null)
+            //{
+            //    for(int i = SkipCount + 1; i <= SkipCount + MaxResultCount; i++)
+            //    {
+            //        result.Add(rs[i]);
+            //    }
+            //    return new PagedResultDto<AuthorDto>
+            //    {
+            //        TotalCount = count,
+            //        Items = result
+            //    };
+            //}
+            SkipCount = input.SkipCount;
+            MaxResultCount = input.MaxResultCount;
             return new PagedResultDto<AuthorDto>
             {
                 TotalCount = count,
-                Items = ObjectMapper.Map<List<Author>, List<AuthorDto>>(items)
+                Items = rs
             };
 
         }

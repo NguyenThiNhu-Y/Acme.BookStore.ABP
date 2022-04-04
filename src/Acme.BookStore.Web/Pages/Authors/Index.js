@@ -21,6 +21,7 @@ $(function () {
     getFilter = function () {
         return {
             filterText: $("input[name='Search']").val(),
+            
         };
     };
 
@@ -34,7 +35,10 @@ $(function () {
             
             ajax: abp.libs.datatables.createAjax(acme.bookStore.authors.author.getList, getFilter),
             columnDefs: [
-                
+                {
+                    title: l('STT'),
+                    data: "stt"
+                },
                 {
                     title: l('Name'),
                     data: "name",
@@ -149,6 +153,7 @@ $(function () {
     });
 
     $("input[name='Search'").keyup(function () {
+        
         dataTable.ajax.reload();
         console.log(getFilter);
     });

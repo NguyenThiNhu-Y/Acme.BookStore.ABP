@@ -88,6 +88,7 @@ namespace Acme.BookStore.Books
             var count = await _bookRepository.GetCountAsync(input.FilterText, input.Name, input.IdAuthor, input.IdCategory);
             var items = await _bookRepository.GetListAsync( input.FilterText, input.Name, input.IdAuthor, input.IdCategory, input.Sorting, input.MaxResultCount, input.SkipCount);
             var result = new List<BookDto>();
+            int index = 1;
             foreach (var i in items)
             {
                 var category = (await _categoryRepository.FindAsync(i.Type));
@@ -104,7 +105,7 @@ namespace Acme.BookStore.Books
                 }
                 result.Add(new BookDto()
                 {
-
+                    STT = index++,
                     CategoryParent = ctgParent,
                     Name = i.Name,
                     PublishDate = i.PublishDate,
@@ -112,7 +113,9 @@ namespace Acme.BookStore.Books
                     Type = i.Type,
                     Id = i.Id,
                     Author = authorName,
-                    IdAuthor = i.IdAuthor
+                    IdAuthor = i.IdAuthor,
+                    Image = i.Image,
+                    Describe = i.Describe
                 }) ;
             }
             return new PagedResultDto<BookDto>

@@ -7,6 +7,7 @@ namespace Acme.BookStore.Books
 {
     public class BookDto : AuditedEntityDto<Guid>
     {
+        public int STT { get; set; }
         public string Name { get; set; }
         public Guid Type { get; set; }
         public DateTime PublishDate { get; set; }

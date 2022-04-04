@@ -96,6 +96,7 @@ namespace Acme.BookStore.Categories
             var items = await _categoryRepository.GetListAsync(input.FilterText, input.Name, input.Sorting, input.MaxResultCount,input.SkipCount);
             var listBook = await _bookRepository.GetListAsync();
 
+            var index = 1;
             List<CategoryDto> result = new List<CategoryDto>();
             foreach (var i in items)
             {
@@ -116,9 +117,10 @@ namespace Acme.BookStore.Categories
                         countBooks++;
 
                 }
-                
+
                 result.Add(new CategoryDto()
                 {
+                    STT = index++,
                     Id = i.Id,
                     Name = i.Name,
                     CategoryParent = ctgParent,
@@ -127,8 +129,8 @@ namespace Acme.BookStore.Categories
                     CountBook = countBooks,
                     Status = i.Status,
                     IdParen = i.IdParen,
-                    
-                });
+
+                }) ;
             }
             return new PagedResultDto<CategoryDto>
             {

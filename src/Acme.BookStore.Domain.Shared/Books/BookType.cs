@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Acme.BookStore.Books
 {
+    public static class DefaultUploadImage
+    {
+        public const string UploadImageBook = "/ImageBooks/";
+    }
     public enum BookType
     {
         Undefined,

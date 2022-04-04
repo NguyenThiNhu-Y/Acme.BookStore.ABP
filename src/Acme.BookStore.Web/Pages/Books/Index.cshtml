@@ -9,6 +9,8 @@
 @model IndexModel
 @section scripts{
     <abp-script src="/Pages/Books/Index.js"></abp-script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
 }
 <abp-card>
     <abp-card-header>
@@ -30,7 +32,6 @@
                     <label class="form-label">@L["Search"]</label>
                     <input name="Search" placeholder="@L["Search"]" class="form-control" />
                 </div>
-               
             </abp-column>
             <abp-column size-md="_4">
                 <abp-select asp-for="CategoryId"></abp-select>
