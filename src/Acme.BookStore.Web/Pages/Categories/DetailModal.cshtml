@@ -11,13 +11,16 @@
     }*@
 @section Scripts{
 
-    <script src="~/ckeditor/ckeditor.js"></script>
-    <script src="~/ckfinder/ckfinder.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
     <script>
-        CKEDITOR.replace('short');
-        CKFinder.setupCKEditor(editor, '/ckfinder/');
-    </script>
+        $(function () {
+            var converter = new showdown.Converter();
+            var text = $("#short").val();
+            document.getElementById('test').innerHTML = converter.makeHtml(text);
+        })
+      </script>
 }
+
 <form method="post" asp-page="/Categories/DetailModal">
     <abp-card >
         <abp-card-header title="@L["Detail"].Value"></abp-card-header>
@@ -40,9 +43,12 @@
                 <label>@L["CategoryParent"]</label>
                 <input asp-for="Category.CategoryParent" readonly class="form-control" />
             </div>
-            <div class="mb-3">
-                <label>@L["Describe"]</label>
-                <textarea asp-for="Category.Describe" readonly id="short"  />
+            <div class="mb-3" >
+                <label class="form-label">@L["ShortBio"]</label>
+                <textarea asp-for="Category.Describe" id="short" rows="3" hidden></textarea>
+                <div id="test" class="form-control">
+
+                </div>
             </div>
         </abp-card-body>
         @*<abp-card-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-card-footer>*@

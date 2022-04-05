@@ -101,7 +101,8 @@ $(function () {
                                     text: l('Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
-                                        dataTable.ajax.reload();
+                                        window.location = "https://localhost:44338/Categories/EditModal?Id=" + data.record.id;
+                                        //dataTable.ajax.reload();
                                     }
                                 },
                                 {

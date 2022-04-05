@@ -16,7 +16,6 @@ namespace Acme.BookStore.Categories
 
         public string Image { get; set; }
 
-        [DataType(DataType.Text)]
         public string Describe { get; set; }
 
         public Status Status { get; set; }

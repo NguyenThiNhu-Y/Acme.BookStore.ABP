@@ -5,27 +5,17 @@
 @model DetailModalModel
 @inject IStringLocalizer<BookStoreResource> L
 @section scripts{
-    <abp-script src="/Pages/Authors/Index.js"></abp-script>
 
-    <link rel="stylesheet" href="~/CSS/Style.css" />
-    <script src="~/ckeditor/ckeditor.js"></script>
-    <script src="~/ckfinder/ckfinder.js"></script>
-    @*<script>
-        var editor = CKEDITOR.replace('short');
-        CKFinder.setupCKEditor(editor, '/ckfinder/');
-    </script>*@
-<script type="text/javascript">
-    CKEDITOR.replace('short', {
-        customConfig: "/ckeditor/config.js"
-    });
-</script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
     <script>
-        function Back() {
-            window.location = "https://localhost:44338/Authors";
-        };
+        $(function () {
+            var converter = new showdown.Converter();
+            var text = $("#short").val();
+            document.getElementById('test').innerHTML = converter.makeHtml(text);
+        })
     </script>
 }
-
 
 <form method="post" asp-page="/Authors/DetailModal">
     <abp-card size="ExtraLarge">
@@ -36,9 +26,7 @@
             </abp-row>
         </abp-card-header>
         <abp-card-body>
-            <abp-button id="back"
-                        text="@L["Back"].Value"
-                        button-type="Primary" onclick="Back()" />
+            <a href="/Authors/Index" class="btn btn-primary">@L["Back"].Value</a>
             <abp-input asp-for="Id" />
             <div class="mb-3">
                 <label>@L["Name"]</label>
@@ -48,12 +36,12 @@
                 <label>@L["DoB"]</label>
                 <input asp-for="Author.DoB" onchange='checkDate()' id="from-datepicker" required readonly class="form-control" />
             </div>
-
-
-
             <div class="mb-3">
-                <label>@L["ShortBio"]</label>
-                <textarea asp-for="Author.ShortBio" id="short" rows="3"></textarea>
+                <label class="form-label">@L["ShortBio"]</label>
+                <textarea asp-for="Author.ShortBio" id="short" rows="3" hidden></textarea>
+                <div id="test">
+
+                </div>
             </div>
         </abp-card-body>
 

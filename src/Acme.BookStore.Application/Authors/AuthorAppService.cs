@@ -188,23 +188,29 @@ namespace Acme.BookStore.Authors
 
         public string UploadImage(IFormFile file)
         {
-            string filePath = "";
-            if (file!= null)
-            {
-                var extension = Path.GetExtension(file.FileName).ToLower();
-                var wwwRootPath = _hostEnvironment.WebRootPath;
-                var filename = "Author" + DateTime.Now.ToString("yymmssfff") + extension;
-                var image = DefaultUploadImage.UploadImageAuthor + filename;
-                var path = Path.Combine(wwwRootPath + image);
+            //string filePath = "";
+            //if (file!= null)
+            //{
+            //    var extension = Path.GetExtension(file.FileName).ToLower();
+            //    var wwwRootPath = _hostEnvironment.WebRootPath;
+            //    var filename = "Author" + DateTime.Now.ToString("yymmssfff") + extension;
+            //    var image = DefaultUploadImage.UploadImageAuthor + filename;
+            //    var path = Path.Combine(wwwRootPath + image);
 
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-                filePath = "https://localhost:44338/ImageAuthor/" + filename;
+            //    using (var stream = new FileStream(path, FileMode.Create))
+            //    {
+            //        file.CopyTo(stream);
+            //    }
+            //    filePath = "https://localhost:44338/ImageAuthor/" + filename;
 
-            }
-            return filePath;
+            //}
+            //return filePath;
+            var fileName = DateTime.Now.ToString("yymmssfff") + file.FileName;
+            var path = Path.Combine(Directory.GetCurrentDirectory(),
+                _hostEnvironment.WebRootPath, "ImageAuthor", fileName);
+            var stream = new FileStream(path, FileMode.Create);
+            file.CopyToAsync(stream);
+            return "/ImageAuthor" + fileName;
         }
     }
 }

@@ -6,16 +6,16 @@ $(function () {
     l = abp.localization.getResource('BookStore');
     var createModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Authors/CreateModal',
-        scriptUrl: '/Pages/Authors/Create.js'
+        //scriptUrl: '/Pages/Authors/Create.js'
     });
     var editModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Authors/EditModal',
-        scriptUrl: '/Pages/Authors/Edit.js'
+        //scriptUrl: '/Pages/Authors/Edit.js'
     });
     var listBook = new abp.ModalManager(abp.appPath + 'Authors/ListBook');
     var detailModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Authors/DetailModal',
-        scriptUrl: '/Pages/Authors/Edit.js'
+        //scriptUrl: '/Pages/Authors/Edit.js'
     })
     //get the value of the search input
     getFilter = function () {
