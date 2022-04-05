@@ -6,22 +6,22 @@
 @using Acme.BookStore.Categories
 @model DetailModalModel
 @inject IStringLocalizer<BookStoreResource> L
-@{
+@*@{
         Layout = null;
-    }
-@*@section Scripts{
+    }*@
+@section Scripts{
 
     <script src="~/ckeditor/ckeditor.js"></script>
     <script src="~/ckfinder/ckfinder.js"></script>
     <script>
-        //CKEDITOR.replace('short');
-        //CKFinder.setupCKEditor(editor, '/ckfinder/');
+        CKEDITOR.replace('short');
+        CKFinder.setupCKEditor(editor, '/ckfinder/');
     </script>
-}*@
+}
 <form method="post" asp-page="/Categories/DetailModal">
-    <abp-modal size="ExtraLarge">
-        <abp-modal-header title="@L["Detail"].Value"></abp-modal-header>
-        <abp-modal-body>
+    <abp-card >
+        <abp-card-header title="@L["Detail"].Value"></abp-card-header>
+        <abp-card-body>
             <abp-input asp-for="Id" />
 
             @{ var path = "/ImageCategories/" + Model.Category.Image;}
@@ -44,7 +44,7 @@
                 <label>@L["Describe"]</label>
                 <textarea asp-for="Category.Describe" readonly id="short"  />
             </div>
-        </abp-modal-body>
-        @*<abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>*@
-    </abp-modal>
+        </abp-card-body>
+        @*<abp-card-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-card-footer>*@
+    </abp-card>
 </form>

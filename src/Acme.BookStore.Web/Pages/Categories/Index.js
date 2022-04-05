@@ -16,7 +16,7 @@ $(function () {
     });
     var detailModal = new abp.ModalManager({
         viewUrl: abp.appPath + 'Categories/DetailModal',
-        scriptUrl: '/Pages/ckeditor.js'
+        //scriptUrl: '/Pages/ckeditor.js'
     });
     var deleteModal = new abp.ModalManager(abp.appPath + 'Categories/EditModal');
     var listBook = new abp.ModalManager(abp.appPath + 'Categories/ListBook');
@@ -90,8 +90,8 @@ $(function () {
                                     text: l('Detail'),
                                     action: function (data) {                                        
                                         dataTable.ajax.reload();
-                                        //window.location = "https://localhost:44338/Categories/DetailModal?Id=" + data.record.id;
-                                        detailModal.open({ id: data.record.id });                                      
+                                        window.location = "https://localhost:44338/Categories/DetailModal?Id=" + data.record.id;
+                                        //detailModal.open({ id: data.record.id });                                      
 
                                        
                                         //location.reload();

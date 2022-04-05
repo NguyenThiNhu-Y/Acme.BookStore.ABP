@@ -89,15 +89,15 @@ $(function () {
                                 {
                                     text: l('Detail'),
                                     action: function (data) {
-                                        detailModal.open({ id: data.record.id });
-                                        //window.location = "https://localhost:44338/Authors/EditModal?Id=" + data.record.id;
+                                        //detailModal.open({ id: data.record.id });
+                                        window.location = "https://localhost:44338/Authors/DetailModal?Id=" + data.record.id;
                                     }
                                 },
                                 {
                                     text: l('Edit'),
                                     action: function (data) {
-                                        editModal.open({ id: data.record.id });
-                                        //window.location = "https://localhost:44338/Authors/EditModal?Id=" + data.record.id;
+                                        //editModal.open({ id: data.record.id });
+                                        window.location = "https://localhost:44338/Authors/EditModal?Id=" + data.record.id;
                                     }
                                 },
                                 {
@@ -148,8 +148,8 @@ $(function () {
     });
     $('#NewAuthor').click(function (e) {
         e.preventDefault();
-        createModal.open();
-        //window.location = "https://localhost:44338/Authors/CreateModal";
+        //createModal.open();
+        window.location = "https://localhost:44338/Authors/CreateModal";
     });
 
     $("input[name='Search'").keyup(function () {

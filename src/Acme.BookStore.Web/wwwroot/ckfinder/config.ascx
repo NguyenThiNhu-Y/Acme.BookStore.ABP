@@ -26,8 +26,8 @@
 	{
 		// Paste your license name and key here. If left blank, CKFinder will
 		// be fully functional, in Demo Mode.
-		LicenseName = "";
-		LicenseKey = "";
+		LicenseName = "https://localhost:44338";
+		LicenseKey = "1GZGMGBWP7PH6QP8PVG64Z656USJ3";
 
 		// The base URL used to reach files in CKFinder through the browser.
         BaseUrl = "/libs/ckfinder/userfiles";

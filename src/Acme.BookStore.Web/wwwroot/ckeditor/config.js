@@ -19,4 +19,18 @@ CKEDITOR.editorConfig = function( config ) {
     //config.filebrowserFlashUploadUrl = '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash';
 
     //CKFinder.setupCKEditor(null, '/ckfinder/');
+
+    config.syntaxhighlight_lang = 'csharp';
+    config.syntaxhighlight_hideControls = true;
+    config.languages = 'vi';
+    config.filebrowserBrowseUrl = '/ckfinder/ckfinder.html';
+    config.filebrowserImageBrowseUrl = '/ckfinder/ckfinder.html?Types=Images';
+    config.filebrowserFlashBrowseUrl = '/ckfinder/ckfinder.html?Types=Flash';
+    config.filebrowserUploadUrl = '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=File';
+    config.filebrowserImageUploadUrl = '/Data';
+    config.filebrowserFlashUploadUrl = '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash';
+
+
+    //config.language = 'vi';
+    //config.filebrowserImageUploadUrl = '/api/app/author/upload-image';
 };

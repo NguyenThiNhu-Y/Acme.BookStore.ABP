@@ -28,23 +28,23 @@ namespace Acme.BookStore.Web.Pages.Authors
             Author = new CreateUpdateAuthorDto();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(IFormFile file)
         {
-            //if (file != null)
-            //{
-            //    var extension = Path.GetExtension(file.FileName).ToLower();
-            //    var wwwRootPath = _hostEnvironment.WebRootPath;
-            //    var filename = "Author" + DateTime.Now.ToString("yymmssfff") + extension;
-            //    var image = DefaultUploadImage.UploadImageAuthor + filename;
-            //    var path = Path.Combine(wwwRootPath + image);
+            if (file != null)
+            {
+                var extension = Path.GetExtension(file.FileName).ToLower();
+                var wwwRootPath = _hostEnvironment.WebRootPath;
+                var filename = "Author" + DateTime.Now.ToString("yymmssfff") + extension;
+                var image = DefaultUploadImage.UploadImageAuthor + filename;
+                var path = Path.Combine(wwwRootPath + image);
 
-            //    using (var stream = new FileStream(path, FileMode.Create))
-            //    {
-            //        file.CopyTo(stream);
-            //    }
-            //    Author.Image = filename;
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                Author.Image = filename;
 
-            //}
+            }
             if (ModelState.IsValid)
             {
                 await _authorAppService.CreateAsync(Author);

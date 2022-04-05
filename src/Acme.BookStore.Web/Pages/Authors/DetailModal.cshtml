@@ -1,25 +1,44 @@
 ﻿@page
-@using Acme.BookStore.Authors
 @using Acme.BookStore.Localization
 @using Microsoft.Extensions.Localization
 @using Acme.BookStore.Web.Pages.Authors
-@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
-
 @model DetailModalModel
 @inject IStringLocalizer<BookStoreResource> L
-@{
-    Layout = null;
+@section scripts{
+    <abp-script src="/Pages/Authors/Index.js"></abp-script>
+
+    <link rel="stylesheet" href="~/CSS/Style.css" />
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    @*<script>
+        var editor = CKEDITOR.replace('short');
+        CKFinder.setupCKEditor(editor, '/ckfinder/');
+    </script>*@
+<script type="text/javascript">
+    CKEDITOR.replace('short', {
+        customConfig: "/ckeditor/config.js"
+    });
+</script>
+    <script>
+        function Back() {
+            window.location = "https://localhost:44338/Authors";
+        };
+    </script>
 }
 
+
 <form method="post" asp-page="/Authors/DetailModal">
-    <abp-modal size="ExtraLarge">
-        <abp-modal-header>
+    <abp-card size="ExtraLarge">
+        <abp-card-header>
             <abp-row>
                 <abp-column>@L["DetailAuthor"]</abp-column>
 
             </abp-row>
-        </abp-modal-header>
-        <abp-modal-body>
+        </abp-card-header>
+        <abp-card-body>
+            <abp-button id="back"
+                        text="@L["Back"].Value"
+                        button-type="Primary" onclick="Back()" />
             <abp-input asp-for="Id" />
             <div class="mb-3">
                 <label>@L["Name"]</label>
@@ -30,13 +49,13 @@
                 <input asp-for="Author.DoB" onchange='checkDate()' id="from-datepicker" required readonly class="form-control" />
             </div>
 
-            
+
 
             <div class="mb-3">
                 <label>@L["ShortBio"]</label>
-                <textarea asp-for="Author.ShortBio" id="shortEdit" rows="3" readonly></textarea>
+                <textarea asp-for="Author.ShortBio" id="short" rows="3"></textarea>
             </div>
-        </abp-modal-body>
-        
-    </abp-modal>
+        </abp-card-body>
+
+    </abp-card>
 </form>
